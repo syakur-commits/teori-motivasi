@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bahan Ajar: Teori Motivasi Belajar</title>
+    <style>
+        /* --- CSS Reset Sederhana --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* --- Gaya Utama (Body & Typography) --- */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            background-color: #f4f7f6;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 960px;
+            margin: 20px auto;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+        }
+
+        header {
+            background-color: #0056b3; /* Biru Edukasi */
+            color: white;
+            padding: 24px 30px;
+            border-bottom: 4px solid #004080;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2rem;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+        }
+        
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        /* --- Navigasi SPA --- */
+        nav {
+            display: flex;
+            background-color: #f9f9f9;
+            border-bottom: 1px solid #ddd;
+        }
+
+        nav button {
+            flex: 1;
+            padding: 15px 10px;
+            border: none;
+            background-color: transparent;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s, color 0.2s;
+            border-bottom: 3px solid transparent;
+            color: #555;
+        }
+
+        nav button:hover {
+            background-color: #e9ecef;
+        }
+
+        nav button.active {
+            color: #0056b3;
+            border-bottom-color: #0056b3;
+        }
+
+        /* --- Konten Section --- */
+        main {
+            padding: 30px;
+            flex: 1;
+        }
+
+        .content-section {
+            display: none; /* Disembunyikan secara default */
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        .content-section.active {
+            display: block; /* Ditampilkan jika aktif */
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            color: #004080;
+            border-bottom: 2px solid #e9ecef;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        
+        h3 {
+            font-size: 1.4rem;
+            color: #0056b3;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+
+        p, ul, li {
+            margin-bottom: 15px;
+        }
+        
+        ul {
+            list-style-position: inside;
+            padding-left: 10px;
+        }
+
+        .highlight-box {
+            background-color: #e6f7ff;
+            border-left: 5px solid #0056b3;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+            font-style: italic;
+        }
+
+        /* --- Gaya Accordion --- */
+        .accordion {
+            background-color: #f1f1f1;
+            color: #444;
+            cursor: pointer;
+            padding: 18px;
+            width: 100%;
+            border: none;
+            text-align: left;
+            outline: none;
+            font-size: 1.1rem;
+            font-weight: 600;
+            transition: 0.4s;
+            margin-top: 10px;
+            border-radius: 5px;
+        }
+
+        .accordion:hover, .accordion.open {
+            background-color: #e0e9f5;
+        }
+        
+        .accordion::after {
+            content: '\002B'; /* Plus sign */
+            color: #0056b3;
+            font-weight: bold;
+            float: right;
+            margin-left: 5px;
+        }
+
+        .accordion.open::after {
+            content: "\2212"; /* Minus sign */
+        }
+
+        .panel {
+            padding: 0 18px;
+            background-color: white;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+            border: 1px solid #f1f1f1;
+            border-top: none;
+            border-radius: 0 0 5px 5px;
+        }
+        
+        .panel div {
+            padding: 20px 0;
+        }
+
+        /* --- Gaya Kuis --- */
+        .quiz-container {
+            margin-top: 20px;
+        }
+
+        .question-block {
+            background-color: #fdfdfd;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .question-block p {
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+        }
+
+        .options label {
+            display: block;
+            background-color: #f9f9f9;
+            padding: 12px 15px;
+            border-radius: 5px;
+            margin-bottom: 8px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            border: 1px solid #ddd;
+        }
+        
+        .options label:hover {
+            background-color: #e9ecef;
+        }
+        
+        .options input[type="radio"] {
+            margin-right: 10px;
+        }
+
+        #submit-quiz {
+            background-color: #28a745;
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        
+        #submit-quiz:hover {
+            background-color: #218838;
+        }
+
+        #quiz-result {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 5px;
+        }
+        
+        .result-correct {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .result-incorrect {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        /* --- Gaya Refleksi --- */
+        .reflection-container textarea {
+            width: 100%;
+            min-height: 150px;
+            padding: 15px;
+            font-family: inherit;
+            font-size: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+
+        /* --- Footer --- */
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #343a40;
+            color: #f8f9fa;
+            font-size: 0.9rem;
+            margin-top: auto;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>Motivasi Belajar: Bahan Bakar Pembelajaran</h1>
+            <p>Memahami Teori Kognitif, Sosio-Kognitif, dan Aplikasi Praktis (ARCS)</p>
+        </header>
+
+        <nav>
+            <button class="nav-button active" onclick="showSection('pendahuluan')">Pendahuluan</button>
+            <button class="nav-button" onclick="showSection('teori')">Teori</button>
+            <button class="nav-button" onclick="showSection('arcs')">Model ARCS</button>
+            <button class="nav-button" onclick="showSection('kuis')">Kuis & Refleksi</button>
+        </nav>
+
+        <main>
+            <section id="pendahuluan" class="content-section active">
+                <h2>Analogi "Bahan Bakar"</h2>
+                <p>Selamat datang di bahan ajar interaktif ini. Kita akan menjelajahi salah satu faktor paling krusial dalam pembelajaran: <strong>Motivasi</strong>.</p>
+                <p>Bayangkan kurikulum, media pembelajaran, dan strategi mengajar Anda adalah sebuah "kendaraan" pembelajaran yang canggih. Namun, kendaraan secanggih apa pun tidak akan bergerak tanpa "bahan bakar".</p>
+                <div class="highlight-box">
+                    <strong>Motivasi adalah bahan bakar tersebut.</strong> Ia adalah proses internal yang mengaktifkan, memandu, dan mempertahankan perilaku siswa dari waktu ke waktu untuk mencapai suatu tujuan.
+                </div>
+                
+                <h3>Intrinsik vs. Ekstrinsik</h3>
+                <p>Secara umum, motivasi terbagi dua:</p>
+                <ul>
+                    <li><strong>Motivasi Intrinsik:</strong> Dorongan dari dalam diri. Siswa belajar karena menikmati prosesnya, merasa tertantang, atau murni ingin tahu.</li>
+                    <li><strong>Motivasi Ekstrinsik:</strong> Dorongan dari luar. Siswa belajar untuk mendapatkan nilai bagus, pujian, atau menghindari hukuman.</li>
+                </ul>
+                <p><strong>Waspada:</strong> Bahan kajian mengingatkan kita pada <em>"Overjustification Effect"</em>, di mana memberikan imbalan eksternal (ekstrinsik) untuk aktivitas yang sudah dinikmati siswa (intrinsik) justru dapat mematikan minat asli siswa tersebut.</p>
+            </section>
+
+            <section id="teori" class="content-section">
+                <h2>Teori Kognitif & Sosio-Kognitif</h2>
+                <p>Alih-alih sekadar "hadiah dan hukuman" (Behaviorisme), teori kognitif dan sosio-kognitif fokus pada <strong>proses berpikir</strong> dan <strong>keyakinan</strong> siswa.</p>
+
+                <button class="accordion">1. Teori Harapan-Nilai (Expectancy-Value Theory)</button>
+                <div class="panel">
+                    <div>
+                        <p>Motivasi siswa adalah hasil perkalian dari dua keyakinan utama:</p>
+                        <p><strong>Motivasi = Harapan (Expectancy) x Nilai (Value)</strong></p>
+                        <ul>
+                            <li><strong>Harapan (Expectancy):</strong> Keyakinan siswa, "Bisakah saya mengerjakan tugas ini?"</li>
+                            <li><strong>Nilai (Value):</strong> Keyakinan siswa, "Mengapa saya harus mengerjakan tugas ini?"</li>
+                        </ul>
+                        <p>Nilai (Value) sendiri terbagi menjadi:</p>
+                        <ul>
+                            <li><strong>Nilai Intrinsik:</strong> Kenikmatan murni saat mengerjakan tugas.</li>
+                            <li><strong>Nilai Guna (Utility):</strong> Manfaat tugas untuk mencapai tujuan masa depan (misal: "Belajar statistik penting untuk skripsi saya").</li>
+                            <li><strong>Nilai Pencapaian (Attainment):</strong> Pentingnya tugas untuk mengonfirmasi identitas diri (misal: "Saya ingin dikenal sebagai penulis yang baik").</li>
+                            <li><strong>Biaya (Cost):</strong> Pengorbanan yang harus dikeluarkan (waktu, tenaga, emosi).</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <button class="accordion">2. Teori Atribusi (Attribution Theory)</button>
+                <div class="panel">
+                    <div>
+                        <p>Teori ini menjelaskan bagaimana siswa <strong>mencari alasan</strong> atas keberhasilan atau kegagalan mereka. Alasan (atribusi) ini memengaruhi motivasi di masa depan.</p>
+                        <p>Menurut Weiner, atribusi dikategorikan dalam 3 dimensi:</p>
+                        <ul>
+                            <li><strong>Lokus (Locus):</strong> Apakah penyebabnya Internal (diri sendiri) atau Eksternal (luar)?</li>
+                            <li><strong>Stabilitas (Stability):</strong> Apakah penyebabnya Stabil (menetap) atau Tidak Stabil (bisa berubah)?</li>
+                            <li><strong>Kendali (Controllability):</strong> Apakah penyebabnya bisa dikendalikan siswa atau Tidak Terkendali?</li>
+                        </ul>
+                        <div class="highlight-box">
+                            <strong>Atribusi Adaptif (Sehat) untuk Kegagalan:</strong> "Saya gagal karena <strong>usaha</strong> saya kurang." (Internal, Tidak Stabil, Terkendali). Ini memotivasi siswa untuk belajar lebih giat.
+                        </div>
+                    </div>
+                </div>
+
+                <button class="accordion">3. Teori Efikasi Diri (Self-Efficacy Theory)</button>
+                <div class="panel">
+                    <div>
+                        <p>Dikemukakan oleh Albert Bandura, efikasi diri adalah <strong>keyakinan seseorang akan kemampuannya untuk berhasil</strong> dalam situasi tertentu. Ini BUKAN tentang "bisa" secara objektif, tapi tentang "percaya bisa".</p>
+                        <p>Efikasi diri bersumber dari 4 hal:</p>
+                        <ol>
+                            <li><strong>Pengalaman Keberhasilan (Mastery):</strong> Sumber paling kuat. "Saya pernah berhasil sebelumnya."</li>
+                            <li><strong>Pengalaman Vikarius (Vicarious):</strong> Melihat orang lain yang mirip berhasil. "Jika dia bisa, saya juga bisa."</li>
+                            <li><strong>Persuasi Sosial (Social Persuasion):</strong> Dorongan verbal dari orang lain. "Kata guru, saya pasti bisa."</li>
+                            <li><strong>Kondisi Fisiologis/Emosional:</strong> Menafsirkan sinyal tubuh (misal: jantung berdebar ditafsirkan sebagai semangat, bukan cemas).</li>
+                        </ol>
+                    </div>
+                </div>
+
+                <button class="accordion">4. Teori Tujuan (Goal Theory) & Mindset</button>
+                <div class="panel">
+                    <div>
+                        <p>Teori ini melihat <strong>alasan</strong> siswa terlibat dalam tugas. Ada dua orientasi tujuan utama:</p>
+                        <ul>
+                            <li><strong>Tujuan Penguasaan (Mastery Goals):</strong> Fokus untuk benar-benar memahami materi dan meningkatkan kompetensi. Siswa dengan <em>Growth Mindset</em> (percaya kemampuan bisa tumbuh) cenderung memilih tujuan ini.</li>
+                            <li><strong>Tujuan Performa (Performance Goals):</strong> Fokus untuk menunjukkan kompetensi atau terlihat pintar (seringkali dibanding orang lain). Siswa dengan <em>Fixed Mindset</em> (percaya kemampuan itu bawaan) cenderung memilih tujuan ini.</li>
+                        </ul>
+                        <p>Tujuan Performa bisa dibagi lagi menjadi:</p>
+                        <ul>
+                            <li><strong>Performa-Pendekatan:</strong> Ingin terlihat paling pintar.</li>
+                            <li><strong>Performa-Penghindaran:</strong> Tidak ingin terlihat paling bodoh.</li>
+                        </ul>
+                    </div>
+                </div>
+
+            </section>
+
+            <section id="arcs" class="content-section">
+                <h2>Aplikasi Praktis: Model ARCS</h2>
+                <p>Dikembangkan oleh John Keller, model ARCS adalah kerangka kerja desain instruksional untuk merancang pembelajaran yang memotivasi. ARCS adalah akronim dari:</p>
+
+                <button class="accordion">A - Attention (Perhatian)</button>
+                <div class="panel">
+                    <div>
+                        <p>Strategi untuk <strong>menarik dan mempertahankan</strong> perhatian siswa.</p>
+                        <ul>
+                            <li><strong>Kejutan/Inkongruensi:</strong> Sajikan fakta yang mengejutkan, paradoks, atau humor.</li>
+                            <li><strong>Inkuiri:</strong> Awali dengan pertanyaan menantang atau teka-teki.</li>
+                            <li><strong>Variasi:</strong> Ubah-ubah metode penyampaian (video, diskusi, game).</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <button class="accordion">R - Relevance (Relevansi)</button>
+                <div class="panel">
+                    <div>
+                        <p>Strategi untuk <strong>menghubungkan materi</strong> dengan kehidupan dan tujuan siswa.</p>
+                        <ul>
+                            <li><strong>Kaitkan dengan Pengalaman:</strong> Gunakan contoh yang dekat dengan dunia siswa.</li>
+                            <li><strong>Tunjukkan Nilai Guna:</strong> Jelaskan bagaimana materi ini akan bermanfaat bagi mereka di masa depan.</li>
+                            <li><strong>Beri Pilihan:</strong> Izinkan siswa memilih topik proyek atau cara mengerjakan tugas.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <button class="accordion">C - Confidence (Kepercayaan Diri)</button>
+                <div class="panel">
+                    <div>
+                        <p>Strategi untuk <strong>membangun harapan positif</strong> akan keberhasilan.</p>
+                        <ul>
+                            <li><strong>Komunikasikan Ekspektasi:</strong> Jelaskan rubrik penilaian dan tujuan pembelajaran dengan jelas.</li>
+                            <li><strong>Beri Kesempatan Berhasil:</strong> Awali dengan tugas mudah lalu tingkatkan kesulitannya (scaffolding).</li>
+                            <li><strong>Beri Kontrol:</strong> Beri siswa kontrol atas proses belajar mereka (misal: kecepatan belajar).</li>
+                            <li><strong>Atribusi Positif:</strong> Arahkan siswa untuk mengatribusikan keberhasilan pada usaha (Internal, Terkendali).</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <button class="accordion">S - Satisfaction (Kepuasan)</button>
+                <div class="panel">
+                    <div>
+                        <p>Strategi untuk <strong>memberikan penguatan</strong> atas pencapaian siswa.</p>
+                        <ul>
+                            <li><strong>Konsekuensi Alami:</strong> Beri kesempatan siswa mempraktikkan keterampilan baru dalam konteks nyata (misal: simulasi).</li>
+                            <li><strong>Umpan Balik Positif:</strong> Berikan pujian yang spesifik dan fokus pada proses/usaha, bukan bakat.</li>
+                            <li><strong>Keadilan (Equity):</strong> Pastikan standar penilaian konsisten dan adil bagi semua siswa.</li>
+                        </ul>
+                    </div>
+                </div>
+
+            </section>
+
+            <section id="kuis" class="content-section">
+                <h2>Kuis Interaktif</h2>
+                <p>Uji pemahaman Anda terhadap materi yang telah disajikan.</p>
+
+                <div class="quiz-container">
+                    <div class="question-block">
+                        <p>1. Seorang siswa belajar giat materi menulis cerpen karena ia ingin karyanya dimuat di majalah dinding sekolah agar dikenal sebagai penulis. Menurut Teori Harapan-Nilai, ini adalah contoh dari...</p>
+                        <div class="options" id="q1">
+                            <label><input type="radio" name="q1" value="a"> Nilai Guna (Utility Value)</label>
+                            <label><input type="radio" name="q1" value="b"> Nilai Intrinsik (Intrinsic Value)</label>
+                            <label><input type="radio" name="q1" value="c"> Nilai Pencapaian (Attainment Value)</label>
+                            <label><input type="radio" name="q1" value="d"> Biaya (Cost)</label>
+                        </div>
+                    </div>
+
+                    <div class="question-block">
+                        <p>2. Andi gagal dalam debat bahasa Indonesia. Ia berkata, "Saya gagal karena saya memang tidak berbakat bicara (bawaan) dan saya tidak bisa mengubahnya." Atribusi Andi memiliki dimensi...</p>
+                        <div class="options" id="q2">
+                            <label><input type="radio" name="q2" value="a"> Internal, Stabil, Tidak Terkendali</label>
+                            <label><input type="radio" name="q2" value="b"> Eksternal, Tidak Stabil, Terkendali</label>
+                            <label><input type="radio" name="q2" value="c"> Internal, Tidak Stabil, Terkendali</label>
+                            <label><input type="radio" name="q2" value="d"> Eksternal, Stabil, Tidak Terkendali</label>
+                        </div>
+                    </div>
+
+                    <div class="question-block">
+                        <p>3. Rina merasa gugup sebelum presentasi. Gurunya kemudian menunjukkan video presentasi sukses dari kakak kelasnya tahun lalu yang memiliki latar belakang mirip Rina. Strategi guru ini bertujuan membangun Efikasi Diri Rina melalui sumber...</p>
+                        <div class="options" id="q3">
+                            <label><input type="radio" name="q3" value="a"> Pengalaman Keberhasilan (Mastery)</label>
+                            <label><input type="radio" name="q3" value="b"> Persuasi Sosial (Social Persuasion)</label>
+                            <label><input type="radio" name="q3" value="c"> Kondisi Fisiologis</label>
+                            <label><input type="radio" name="q3" value="d"> Pengalaman Vikarius (Vicarious)</label>
+                        </div>
+                    </div>
+
+                    <div class="question-block">
+                        <p>4. Seorang siswa yang memiliki orientasi "Tujuan Penguasaan" (Mastery Goal) kemungkinan besar akan setuju dengan pernyataan...</p>
+                        <div class="options" id="q4">
+                            <label><input type="radio" name="q4" value="a"> "Yang penting saya dapat nilai A, tidak peduli caranya."</label>
+                            <label><input type="radio" name="q4" value="b"> "Saya ingin benar-benar paham bagaimana menganalisis puisi ini."</label>
+                            <label><input type="radio" name="q4" value="c"> "Semoga saya tidak terlihat bodoh saat presentasi nanti."</label>
+                            <label><input type="radio" name="q4" value="d"> "Tugas ini terlalu sulit, lebih baik saya tidak usah kerjakan."</label>
+                        </div>
+                    </div>
+
+                    <div class="question-block">
+                        <p>5. Guru memulai pelajaran tentang teks negosiasi dengan memutar cuplikan video lucu "tawar-menawar di pasar" dan mengajukan pertanyaan "Pernahkah kalian merasa tertipu saat membeli sesuatu?". Ini adalah penerapan model ARCS pada komponen...</p>
+                        <div class="options" id="q5">
+                            <label><input type="radio" name="q5" value="a"> Attention (Perhatian)</label>
+                            <label><input type="radio" name="q5" value="b"> Relevance (Relevansi)</label>
+                            <label><input type="radio" name="q5" value="c"> Confidence (Kepercayaan Diri)</label>
+                            <label><input type="radio" name="q5" value="d"> Satisfaction (Kepuasan)</label>
+                        </div>
+                    </div>
+
+                    <button id="submit-quiz" onclick="checkQuiz()">Cek Jawaban</button>
+                    <div id="quiz-result"></div>
+                </div>
+
+                <hr style="margin: 40px 0;">
+
+                <h2>Refleksi Pembelajaran</h2>
+                <div class="reflection-container">
+                    <label for="reflection-text" style="font-weight: 600; font-size: 1.1rem;">
+                        Pertanyaan Reflektif:
+                        <p style="font-weight: normal; font-size: 1rem; margin-top: 5px;">Setelah mempelajari berbagai teori motivasi (Expectancy-Value, Attribution, Self-Efficacy, Goal Theory), teori manakah yang menurut Anda paling menantang untuk diterapkan dalam rancangan pembelajaran Anda di kelas Bahasa Indonesia, dan mengapa?</p>
+                    </label>
+                    <textarea id="reflection-text" placeholder="Tuliskan refleksi Anda di sini... (Jawaban tidak dinilai, murni untuk refleksi pribadi)"></textarea>
+                </div>
+
+            </section>
+        </main>
+    </div>
+
+    <footer>
+        <p>Syakur &copy; 2025 | Bahan Ajar Interaktif Teori Motivasi Belajar | TBIN UIN Madura</p>
+    </footer>
+
+    <script>
+        // --- Fungsi Navigasi SPA ---
+        function showSection(sectionId) {
+            // Sembunyikan semua section
+            const sections = document.querySelectorAll('.content-section');
+            sections.forEach(section => {
+                section.classList.remove('active');
+            });
+
+            // Tampilkan section yang dipilih
+            const activeSection = document.getElementById(sectionId);
+            activeSection.classList.add('active');
+
+            // Atur tombol navigasi yang aktif
+            const navButtons = document.querySelectorAll('.nav-button');
+            navButtons.forEach(button => {
+                button.classList.remove('active');
+            });
+            
+            // Tambahkan kelas aktif ke tombol yang diklik
+            // Ini sedikit trik: kita cari tombol yang onclick-nya mengandung sectionId
+            document.querySelector(`nav button[onclick="showSection('${sectionId}')"]`).classList.add('active');
+        }
+
+        // --- Fungsi Accordion ---
+        const accordions = document.querySelectorAll('.accordion');
+        accordions.forEach(acc => {
+            acc.addEventListener('click', function() {
+                this.classList.toggle('open');
+                const panel = this.nextElementSibling;
+                if (panel.style.maxHeight) {
+                    panel.style.maxHeight = null;
+                } else {
+                    panel.style.maxHeight = panel.scrollHeight + "px";
+                }
+            });
+        });
+
+        // --- Fungsi Cek Kuis ---
+        function checkQuiz() {
+            const correctAnswers = {
+                q1: "c",
+                q2: "a",
+                q3: "d",
+                q4: "b",
+                q5: "a"
+            };
+
+            let score = 0;
+            const totalQuestions = Object.keys(correctAnswers).length;
+
+            for (const q in correctAnswers) {
+                const selector = `input[name="${q}"]:checked`;
+                const userAnswer = document.querySelector(selector);
+                
+                const questionBlock = document.getElementById(q).closest('.question-block');
+                // Reset styling
+                questionBlock.style.border = "1px solid #eee";
+
+                if (userAnswer) {
+                    if (userAnswer.value === correctAnswers[q]) {
+                        score++;
+                        // Styling jika benar
+                        questionBlock.style.border = "2px solid #28a745";
+                    } else {
+                        // Styling jika salah
+                        questionBlock.style.border = "2px solid #dc3545";
+                    }
+                } else {
+                    // Styling jika tidak dijawab
+                    questionBlock.style.border = "2px solid #ffc107";
+                }
+            }
+
+            // Tampilkan hasil
+            const resultElement = document.getElementById('quiz-result');
+            resultElement.textContent = `Skor Anda: ${score} dari ${totalQuestions}`;
+            
+            if (score >= (totalQuestions * 0.8)) { // 80%
+                resultElement.className = 'result-correct';
+            } else {
+                resultElement.className = 'result-incorrect';
+            }
+        }
+    </script>
+
+</body>
+</html>
